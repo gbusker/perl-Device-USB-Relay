@@ -1,0 +1,6 @@
+Revision history for Perl extension Device::USB::Relay.
+
+0.01  Wed Feb  3 20:27:06 2010
+	- original version; created by h2xs 1.23 with options
+		-X Device::USB::Relay
+
