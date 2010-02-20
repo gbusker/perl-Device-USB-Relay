@@ -7,12 +7,44 @@ use warnings;
 require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT = qw(
-	
+	relay_on relay_off relay_set
 );
+use Carp;
 
 our $VERSION = '0.01';
 
+sub relay_on
+{
+    my $port = shift;
+    check_port($port);
+    relay_set($port,1);
+}
 
+sub relay_off
+{
+    my $port = shift;
+    check_port($port);
+    relay_set($port,0);
+}
+
+sub relay_set
+{
+    my $port = shift;
+    my $state = shift;
+    
+    $state = $state ? 0 : 1;
+    
+    open TTY, ">/dev/ttyUSB0" or carp "$!";
+    print TTY chr(255),chr($port),chr($state);
+    close TTY;
+}
+    
+sub check_port
+{
+    my $port = shift;
+    unless ( $port = /^\d+$/ ){ carp("Invalid port number: $port"); };
+    if ( $port > 8 or $port < 1 ) { carp("Port number out of range: $port"); };    
+}
 
 
 1;
