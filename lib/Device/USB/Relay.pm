@@ -32,7 +32,7 @@ sub relay_set
     my $port = shift;
     my $state = shift;
     
-    $state = $state ? 0 : 1;
+    $state = $state ? 1 : 0;
     
     open TTY, ">/dev/ttyUSB0" or carp "$!";
     print TTY chr(255),chr($port),chr($state);
@@ -42,7 +42,7 @@ sub relay_set
 sub check_port
 {
     my $port = shift;
-    unless ( $port = /^\d+$/ ){ carp("Invalid port number: $port"); };
+    unless ( $port =~ /^\d+$/ ){ carp("Invalid port number: $port"); };
     if ( $port > 8 or $port < 1 ) { carp("Port number out of range: $port"); };    
 }
 
