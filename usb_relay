@@ -1,0 +1,16 @@
+#!/usr/bin/perl -w
+
+use strict;
+use Device::USB::Relay;
+
+my $port = shift;
+if ($port and $port =~ /^[12345678]$/ ) {
+  my $state= shift or die "Usage: usb_relay [port no] [on|off]";
+  if ( $state eq 'on' ) {
+    relay_on $port;
+  }
+  else {
+    relay_off $port;
+  } 
+}
+
